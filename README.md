@@ -59,3 +59,9 @@ Show all routes
 ```shell script
 php artisan route:list
 ```
+
+create Request
+```shell script
+ php artisan make:request User/UserAuthorizationRequest
+
+```

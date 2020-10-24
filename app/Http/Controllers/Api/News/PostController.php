@@ -1,23 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\News;
+namespace App\Http\Controllers\Api\News;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\ApiController;
 use App\Models\NewsPost;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class PostController extends BaseController
+class PostController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function index(): JsonResponse
     {
        $items = NewsPost::all();
-
-       return view('news.posts.index', compact('items'));
+        return $this->sendResponse(['posts' => $items]);
     }
 
     /**

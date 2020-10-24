@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\News\PostController;
+use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\News\PostController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/sign-in', [AuthController::class, 'signIn']);
+    Route::post('/sign-up', [AuthController::class, 'signUp']);
 });
 
 Route::prefix('news')->middleware('auth:sanctum')->group(function () {
