@@ -2,6 +2,12 @@
 
 laravel 8, nginx, mysql, docker
 
+
+start project
+```shell script
+./project.sh up -d --build
+```
+
 create model and migration
 ```shell script
 php artisan make:model NewsCategory -m
