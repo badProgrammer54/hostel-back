@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\NewsPost;
 use Illuminate\Database\Seeder;
-use App\Models\News;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,6 +16,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(UserTableSeeder ::class);
         $this->call(NewsCategoriesSeeder::class);
-        News::factory(100)->create();
+        NewsPost::factory(100)->create();
     }
 }

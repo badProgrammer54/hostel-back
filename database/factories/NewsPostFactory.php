@@ -2,19 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\News;
+use App\Models\NewsPost;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class NewsFactory extends Factory
+class NewsPostFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = News::class;
+    protected $model = NewsPost::class;
 
     /**
      * Define the model's default state.
@@ -77,4 +77,5 @@ class NewsFactory extends Factory
 
         return $data;
     }
+
 }
