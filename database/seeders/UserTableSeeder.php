@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class UserTableSeeder extends Seeder
@@ -18,12 +19,12 @@ class UserTableSeeder extends Seeder
             [
                 'name' => 'Author unknown',
                 'email' => 'author_unknown@g.g',
-                'password' => bcrypt(Str::random(16))
+                'password' => Hash::make(Str::random(16))
             ],
             [
-                'name' => 'Author',
-                'email' => 'author@g.g',
-                'password' => bcrypt('123123')
+                'name' => 'Test',
+                'email' => 'test@test.ru',
+                'password' => Hash::make('test')
             ]
         ];
 

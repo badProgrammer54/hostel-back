@@ -13,12 +13,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::group(['prefix' => 'news'], function () {
-    Route::get('posts', [PostController::class, 'index'])->name('news.posts');
-});
