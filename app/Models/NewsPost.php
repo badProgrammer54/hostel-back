@@ -20,4 +20,9 @@ class NewsPost extends Model
         'is_published',
         'published_at'
     ];
+
+    public function getFillable(): array
+    {
+        return $this->fillable;
+    }
 }

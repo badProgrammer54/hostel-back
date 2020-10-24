@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\News;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\News\PostStoreRequest;
+use App\Http\Requests\News\PostUpdateRequest;
 use App\Models\NewsPost;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
@@ -46,14 +47,30 @@ class PostController extends ApiController
 
     }
 
-    public function update(Request $request, $id)
+    public function update(PostUpdateRequest $request, int $id): JsonResponse
     {
-        //
+        $newsPost = NewsPost::where('id', $id)->first();
+        $newsPost->update($this->getValidDataToNewsPost($request));
+        return $this->sendResponse(['news_post' => $newsPost]);
     }
 
 
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        //
+        $newsPost = NewsPost::whereId($id);
+        $newsPost->delete();
+        return $this->sendResponse([]);
+    }
+
+    private function getValidDataToNewsPost(Request $request): array
+    {
+        $result = [];
+        $fillables = (new NewsPost())->getFillable();
+        foreach ($fillables as $fillable) {
+            if ($request->get($fillable) !== null) {
+                $result[$fillable] = $request->get($fillable);
+            }
+        }
+        return $result;
     }
 }
