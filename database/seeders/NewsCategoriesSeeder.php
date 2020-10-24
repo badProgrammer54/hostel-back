@@ -17,7 +17,7 @@ class NewsCategoriesSeeder extends Seeder
     {
         $categories = [];
 
-        $cName = 'Бех категории';
+        $cName = 'Main category';
 
         $categories[] = [
             'title' => $cName,
@@ -26,7 +26,7 @@ class NewsCategoriesSeeder extends Seeder
         ];
 
         for ($i = 1; $i <= 15; $i++) {
-            $cName = 'Категория № ' . $i;
+            $cName = 'Category № ' . $i;
             try {
                 $parentId = $i > 4 ? random_int(1, 4) : 1;
             } catch (\Exception $e) {

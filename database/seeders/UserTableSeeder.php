@@ -16,12 +16,12 @@ class UserTableSeeder extends Seeder
     {
         $data = [
             [
-                'name' => 'Автор не известен',
+                'name' => 'Author unknown',
                 'email' => 'author_unknown@g.g',
                 'password' => bcrypt(Str::random(16))
             ],
             [
-                'name' => 'Автор',
+                'name' => 'Author',
                 'email' => 'author@g.g',
                 'password' => bcrypt('123123')
             ]

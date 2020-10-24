@@ -21,3 +21,13 @@ create factories
 ```shell script
 php artisan make:factory NewsFactory
 ```
+
+run seed
+```shell script
+./project.sh web php artisan db:seed
+```
+
+refresh seed
+```shell script
+./project.sh web php artisan migrate:refresh --seed
+```
