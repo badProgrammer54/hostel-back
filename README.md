@@ -16,3 +16,8 @@ create seeder
 ```shell script
 php artisan make:seeder UserTableSeeder
 ```
+
+create factories
+```shell script
+php artisan make:factory NewsFactory
+```
