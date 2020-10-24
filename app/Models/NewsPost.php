@@ -2,13 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class NewsPost extends Model
+class NewsPost extends BaseModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'category_id',
         'user_id',
@@ -21,7 +17,12 @@ class NewsPost extends Model
         'published_at'
     ];
 
-    public function getFillable(): array
+    public function getIsPublished(): bool
+    {
+        return $this->is_published;
+    }
+
+    public function getFillables(): array
     {
         return $this->fillable;
     }

@@ -10,7 +10,6 @@ class PostStoreRequest extends BaseRequest
     {
         return [
             'category_id' => ['integer', 'required'],
-            'user_id' => ['integer', 'required'],
             'title' => ['string', 'max:255', 'required'],
             'slug' => ['string', 'max:255', 'required', 'unique:news_posts'],
             'excerpt' => ['string', 'max:2048', 'required'],
@@ -53,10 +52,5 @@ class PostStoreRequest extends BaseRequest
     public function getCategoryId(): int
     {
         return $this->get('category_id');
-    }
-
-    public function getUserId(): int
-    {
-        return $this->get('user_id');
     }
 }

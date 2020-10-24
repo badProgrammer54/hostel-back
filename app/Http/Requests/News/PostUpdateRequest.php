@@ -3,7 +3,6 @@
 namespace App\Http\Requests\News;
 
 use App\Http\Requests\BaseRequest;
-use App\Models\NewsPost;
 
 class PostUpdateRequest extends BaseRequest
 {
@@ -23,16 +22,13 @@ class PostUpdateRequest extends BaseRequest
         ];
     }
 
-    public function getDataUpdate(): array
+    public function getIsPublished(): bool
     {
-        $result = [];
-        $fillables = (new NewsPost())->getFillable();
-        foreach ($fillables as $fillable)
-        {
-            if($this->get($fillable) !== null) {
-                $result[$fillable] = $this->get($fillable);
-            }
-        }
-        return $result;
+        return $this->get('is_published') ?: false;
+    }
+
+    public function getCategoryId(): ?int
+    {
+        return $this->get('category_id');
     }
 }

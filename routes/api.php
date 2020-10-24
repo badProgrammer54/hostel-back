@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\News\CategoryController;
 use App\Http\Controllers\Api\News\PostController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,6 +37,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('posts', [PostController::class, 'store']);
         Route::patch('posts/{id}', [PostController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('posts/{id}', [PostController::class, 'destroy'])->where('id', '[0-9]+');
+
+        Route::get('categories', [CategoryController::class, 'index']);
+        Route::get('categories/{id}', [CategoryController::class, 'show'])->where('id', '[0-9]+');
+        Route::post('categories', [CategoryController::class, 'store']);
+        Route::patch('categories/{id}', [CategoryController::class, 'update'])->where('id', '[0-9]+');
+        Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->where('id', '[0-9]+');
+
     });
 
     Route::get('user', function (Request $request) {

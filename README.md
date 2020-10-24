@@ -45,7 +45,7 @@ php artisan make:controller News/BaseController
 
 create restController
 ```shell script
-php artisan make:controller News/PostController --resource
+php artisan make:controller Api/News/PostController --resource
 ```
 
 Error solution include(/app): failed to open stream

@@ -15,9 +15,10 @@ class AuthController extends ApiController
     {
         try {
             $user = User::where('email', $request->getEmail())->first();
-            if ($user === null) {
+            if (!($user instanceof User)) {
                 return $this->sendError(1, 'Unauthenticated', 401);
             }
+
             if (!Hash::check($request->getPassword(), $user->password, [])) {
                 return $this->sendError(1, 'Unauthenticated', 401);
             }
