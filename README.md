@@ -11,3 +11,8 @@ running migrations
 ```shell script
 ./project.sh web php artisan migrate
 ```
+
+create seeder
+```shell script
+php artisan make:seeder UserTableSeeder
+```
