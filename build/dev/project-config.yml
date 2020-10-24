@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: nginx_web
+    hostname: nginx_web
+    volumes:
+      - .:/app
+      - ./build/dev/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  web:
+    build:
+      context: ./build/dev/
+      dockerfile: Dockerfile
+    environment: &project_config
+      PHP_ENV: Local
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: database
+    volumes:
+      - .:/app
+      - ./build/dev/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+      - ./build/dev/php-override.ini:/usr/local/etc/php/conf.d/php-override.ini:ro
+      - ./build/dev/entrypoint.sh:/entrypoint.sh:ro
+      - composer-cache:/.composer:rw
+
+    entrypoint: /entrypoint.sh
+
+  mysql:
+    ports:
+    - 3306:3306
+    environment:
+      <<: *project_config
+      MYSQL_ROOT_PASSWORD: "pAsswOrd"
+    entrypoint: ['/entrypoint.sh', '--character-set-server=utf8', '--collation-server=utf8_general_ci']
+
+volumes:
+  composer-cache:
+    driver: local
+
+
+networks:
+  default:
+    external:
+      name: docker-nginx_backend
+
