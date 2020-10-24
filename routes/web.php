@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\News\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+
+Route::group(['prefix' => 'news'], function () {
+    Route::get('posts', [PostController::class, 'index'])->name('news.posts');
 });
