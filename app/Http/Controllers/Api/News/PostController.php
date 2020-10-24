@@ -3,80 +3,55 @@
 namespace App\Http\Controllers\Api\News;
 
 use App\Http\Controllers\Api\ApiController;
+use App\Http\Requests\News\PostStoreRequest;
 use App\Models\NewsPost;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PostController extends ApiController
 {
-    
+    private const COUNT_POSTS_TO_PAGINATE = 15;
+
     public function index(): JsonResponse
     {
-       $items = NewsPost::all();
-        return $this->sendResponse(['posts' => $items]);
+        $newsPosts = NewsPost::paginate(self::COUNT_POSTS_TO_PAGINATE);
+        return $this->sendResponse(['news_posts' => $newsPosts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function store(PostStoreRequest $request): JsonResponse
     {
-        //
+        $newsPost = NewsPost::create([
+            'category_id' => $request->getCategoryId(),
+            'user_id' => $request->getUserId(),
+            'title' => $request->getTitle(),
+            'slug' => $request->getSlug(),
+            'excerpt' => $request->getExcerpt(),
+            'content_raw' => $request->getContentRaw(),
+            'content_html' => $request->getContentHtml(),
+            'is_published' => $request->getIsPublished(),
+            'published_at' => $request->getIsPublished() ? date("Y-m-d H:i:s") : null,
+        ]);
+
+        $newsPost->save();
+
+        return $this->sendResponse(['news_post' => $newsPost]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function show(int $id): JsonResponse
     {
-        //
+        $newsPost = NewsPost::where('id', $id)->first();
+        return $this->sendResponse(['news_post' => $newsPost]);
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         //

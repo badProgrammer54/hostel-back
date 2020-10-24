@@ -3,15 +3,11 @@
 
 namespace App\Http\Requests\User;
 
+use App\Http\Requests\BaseRequest;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UserRegistrationRequest extends FormRequest
+class UserRegistrationRequest extends BaseRequest
 {
-    /**
-     * @return array
-     */
-    public function rules()
+    public function rules(): array
     {
         return [
             'password' => ['string', 'max:20', 'required'],

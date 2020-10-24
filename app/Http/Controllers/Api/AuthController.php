@@ -33,16 +33,15 @@ class AuthController extends ApiController
 
     public function signUp(UserRegistrationRequest $request): JsonResponse
     {
-        try {
-            $user = new User;
-            $user->name = $request->getName();
-            $user->email = $request->getEmail();
-            $user->password = Hash::make($request->getPassword());
-            $user->save();
+        $user = User::create([
+            'name' => $request->getName(),
+            'email' => $request->getEmail(),
+            'password' => Hash::make($request->getPassword()),
+        ]);
 
-            return $this->sendResponse(['user' => $user]);
-        } catch (Exception $e) {
-            return $this->sendError(1, $e->getMessage(), $e->getCode());
-        }
+        $user->save();
+
+        return $this->sendResponse(['user' => $user]);
+
     }
 }

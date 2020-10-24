@@ -27,9 +27,16 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/sign-up', [AuthController::class, 'signUp']);
 });
 
-Route::prefix('news')->middleware('auth:sanctum')->group(function () {
-    Route::get('posts', [PostController::class, 'index'])->name('news.posts');
-    Route::get('/user', function (Request $request) {
+
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::prefix('news')->group(function () {
+        Route::get('posts', [PostController::class, 'index']);
+        Route::get('posts/{id}', [PostController::class, 'show'])->where('id', '[0-9]+');
+        Route::post('posts', [PostController::class, 'store']);
+    });
+
+    Route::get('user', function (Request $request) {
         return $request->user();
     });
 });
