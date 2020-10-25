@@ -7,11 +7,13 @@ namespace App\Services\News;
 use App\Interfaces\DataCreateNewsPostInterface;
 use App\Interfaces\DataUpdateNewsPostInterface;
 use App\Models\Exceptions\ServiceException;
-use App\Models\NewsCategory;
 use App\Models\NewsPost;
+use App\Services\BaseService;
 
-class PostService
+class PostService extends BaseService
 {
+    use NewsTrait;
+
     private const FIELDS_UPDATE = [
         'category_id',
         'title',
@@ -30,11 +32,7 @@ class PostService
      */
     public function createNewsPost(DataCreateNewsPostInterface $dataCreateNewsPost): NewsPost
     {
-        $newsCategory = NewsCategory::find($dataCreateNewsPost->getCategoryId());
-
-        if (!($newsCategory instanceof NewsCategory)) {
-            throw new ServiceException('Category with ' . $dataCreateNewsPost->getCategoryId() . ' not found', 404);
-        }
+        $this->getModalById($this->newsCategoryRepository, $dataCreateNewsPost->getCategoryId());
 
         /** @var NewsPost $newsPost */
         $newsPost = (new NewsPost())->create([
@@ -60,24 +58,23 @@ class PostService
      */
     public function updateNewsPost(int $newsPostId, DataUpdateNewsPostInterface $dataUpdateNewsPost): NewsPost
     {
-        $dataPublished = [];
+        $dataPublishedAt = [];
+
         $newsCategoryId = $dataUpdateNewsPost->getCategoryId();
 
-        $newsPost = NewsPost::find($newsPostId);
-        if (!($newsPost instanceof NewsPost)) {
-            throw new ServiceException('Category with ' . $newsPostId . ' not found', 404);
-        }
+        /** @var NewsPost $newsPost */
+        $newsPost = $this->getModalById($this->newsPostRepository, $newsPostId);
 
-        if ($newsCategoryId !== null && !(NewsCategory::find($newsCategoryId) instanceof NewsCategory)) {
-            throw new ServiceException('Category with ' . $newsCategoryId . ' not found', 404);
+        if($newsCategoryId !== null) {
+            $this->getModalById($this->newsCategoryRepository, $newsCategoryId);
         }
 
         if (!$newsPost->getIsPublished() && $dataUpdateNewsPost->getIsPublished()) {
-            $dataPublished = ['published_at' => date("Y-m-d H:i:s")];
+            $dataPublishedAt = ['published_at' => date("Y-m-d H:i:s")];
         }
 
         $newsPost->update(array_merge($this->getValidDataToNewsPost($dataUpdateNewsPost->getDataToUpdate()),
-            $dataPublished));
+            $dataPublishedAt));
 
         return $newsPost;
     }

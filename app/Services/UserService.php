@@ -6,10 +6,9 @@ namespace App\Services;
 
 use App\Models\Exceptions\ServiceException;
 use App\Models\User;
-use RuntimeException;
 use Illuminate\Support\Facades\Hash;
 
-class UserService
+class UserService extends BaseService
 {
     public function createUser(string $name, string $email, string $password): User
     {

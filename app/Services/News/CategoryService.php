@@ -4,7 +4,9 @@
 namespace App\Services\News;
 
 
-class CategoryService
+use App\Services\BaseService;
+
+class CategoryService extends BaseService
 {
 
 }

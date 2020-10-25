@@ -42,7 +42,11 @@ class PostController extends ApiController
 
     public function show(int $id): JsonResponse
     {
-        $newsPost = NewsPost::find($id);
+        try {
+            $newsPost = $this->postService->getModalById($this->postService->getNewsPostRepository(), $id);
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
 
         return $this->sendResponse(['news_post' => $newsPost]);
     }
@@ -61,13 +65,8 @@ class PostController extends ApiController
 
     public function destroy(int $id): JsonResponse
     {
-        $newsPost = NewsPost::find($id);
-        if (!($newsPost instanceof NewsPost)) {
-            return $this->sendError(1, 'Post with ' . $id . ' not found', 404);
-        }
-
         try {
-            $newsPost->delete();
+            $this->postService->getModalById($this->postService->getNewsPostRepository(), $id)->delete();
         } catch (Exception $e) {
             return $this->sendError(1, $e->getMessage(), 404);
         }
