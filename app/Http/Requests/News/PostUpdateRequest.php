@@ -3,11 +3,10 @@
 namespace App\Http\Requests\News;
 
 use App\Http\Requests\BaseRequest;
+use App\Interfaces\DataUpdateNewsPostInterface;
 
-class PostUpdateRequest extends BaseRequest
+class PostUpdateRequest extends BaseRequest implements DataUpdateNewsPostInterface
 {
-
-
     public function rules(): array
     {
         return [
@@ -30,5 +29,10 @@ class PostUpdateRequest extends BaseRequest
     public function getCategoryId(): ?int
     {
         return $this->get('category_id');
+    }
+
+    public function getDataToUpdate(): array
+    {
+        return $this->all() ?: [];
     }
 }

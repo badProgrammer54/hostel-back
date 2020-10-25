@@ -63,5 +63,10 @@ php artisan route:list
 create Request
 ```shell script
  php artisan make:request User/UserAuthorizationRequest
-
 ```
+
+create Request
+```shell script
+ php artisan make:provider ServiceProvider
+```
+

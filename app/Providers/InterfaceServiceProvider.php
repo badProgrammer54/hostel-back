@@ -10,6 +10,11 @@ use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvi
 
 class InterfaceServiceProvider extends ServiceProvider
 {
+    public function boot()
+    {
+        //
+    }
+
     public function register()
     {
         $this->app->bind(BaseModelInterface::class, BaseModel::class);

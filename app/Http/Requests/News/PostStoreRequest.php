@@ -3,8 +3,9 @@
 namespace App\Http\Requests\News;
 
 use App\Http\Requests\BaseRequest;
+use App\Interfaces\DataCreateNewsPostInterface;
 
-class PostStoreRequest extends BaseRequest
+class PostStoreRequest extends BaseRequest implements DataCreateNewsPostInterface
 {
     public function rules(): array
     {
@@ -52,5 +53,10 @@ class PostStoreRequest extends BaseRequest
     public function getCategoryId(): int
     {
         return $this->get('category_id');
+    }
+
+    public function getUserId(): int
+    {
+        return $this->user()->id;
     }
 }
