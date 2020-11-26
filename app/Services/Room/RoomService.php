@@ -10,8 +10,6 @@ use App\Services\BaseService;
 
 class RoomService extends BaseService
 {
-
-
     /**
      * @param DataCreateRoomInterface $dataCreateRoom
      * @return Room
