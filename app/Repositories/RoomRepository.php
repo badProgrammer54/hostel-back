@@ -5,13 +5,13 @@ namespace App\Repositories;
 
 
 
-use App\Models\NewsCategory;
+use App\Models\Room;
 
-class NewsCategoryRepository extends BaseRepository
+class RoomRepository extends BaseRepository
 {
     /** @return string */
     public function getModelClass(): string
     {
-        return NewsCategory::class;
+        return Room::class;
     }
 }
