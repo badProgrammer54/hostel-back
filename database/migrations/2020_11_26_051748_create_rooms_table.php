@@ -17,11 +17,11 @@ class CreateRoomsTable extends Migration
             $table->id();
             $table->integer( 'number');
             $table->text('description');
-            $table->integer('cost5');
-            $table->integer('cost6');
-            $table->integer('cost7');
-            $table->integer('cost8');
-            $table->integer('cost9');
+            $table->integer('cost5')->default(100);
+            $table->integer('cost6')->default(100);
+            $table->integer('cost7')->default(100);
+            $table->integer('cost8')->default(100);
+            $table->integer('cost9')->default(100);
         });
     }
 
