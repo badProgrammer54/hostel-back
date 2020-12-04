@@ -33,7 +33,9 @@ Route::group(['prefix' => 'auth'], function () {
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('rooms', [RoomController::class, 'index']);
-    Route::get('rooms/{id}', [RoomController::class, 'show'])->where('id', '[0-9]+');
+    Route::get('rooms/{roomId}', [RoomController::class, 'view'])->where('id', '[0-9]+');
+    Route::delete('rooms/{roomId}', [RoomController::class, 'destroy'])->where('id', '[0-9]+');
+    Route::patch('rooms/{roomId}', [RoomController::class, 'update'])->where('id', '[0-9]+');
     Route::post('rooms', [RoomController::class, 'create']);
 
     Route::get('user', function (Request $request) {
