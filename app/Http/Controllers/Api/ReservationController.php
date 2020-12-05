@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Requests\Reservation\ReservationCreateRequest;
+use App\Http\Requests\Reservation\ReservationUpdateRequest;
+use App\Models\Reservation;
+use App\Models\Exceptions\BaseException;
+use Illuminate\Http\JsonResponse;
+use App\Services\Reservation\ReservationService;
+use Exception;
+
+class ReservationController extends ApiController
+{
+    /** @var ReservationService  */
+    private $reservationService;
+
+
+    public function __construct(ReservationService $reservationService)
+    {
+        $this->reservationService = $reservationService;
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
+    {
+        $reservations = Reservation::all();
+        return $this->sendResponse(['reservations' => $reservations]);
+    }
+
+    /**
+     * @param ReservationCreateRequest $request
+     * @param int $roomId
+     * @return JsonResponse
+     */
+    public function create(ReservationCreateRequest $request, int $roomId): JsonResponse
+    {
+        try {
+            $reservation = $this->reservationService->createReservation($request, $roomId);
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
+
+        return $this->sendResponse(['reservation' => $reservation]);
+    }
+
+    /**
+     * @param int $reservationId
+     * @return JsonResponse
+     */
+    public function view(int $reservationId): JsonResponse
+    {
+        try {
+            $reservation = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId);
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
+
+        return $this->sendResponse(['reservation' => $reservation]);
+    }
+
+    /**
+     * @param ReservationUpdateRequest $request
+     * @param int $reservationId
+     * @return JsonResponse
+     */
+    public function update(ReservationUpdateRequest $request, int $reservationId): JsonResponse
+    {
+        try {
+            $reservation = $this->reservationService->updateReservation($request, $reservationId);
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
+
+        return $this->sendResponse(['reservation' => $reservation]);
+    }
+
+    /**
+     * @param int $reservationId
+     * @return JsonResponse
+     * @throws Exception
+     */
+    public function destroy(int $reservationId): JsonResponse
+    {
+        try {
+            $reservation = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId)->delete();
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), 404);
+        }
+
+        return $this->sendResponse(['reservation' => $reservation]);
+    }
+}
