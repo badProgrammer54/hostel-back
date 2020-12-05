@@ -7,11 +7,11 @@ use App\Interfaces\DataCreateRoomInterface;
 use App\Interfaces\DataUpdateRoomInterface;
 use App\Models\Exceptions\ServiceException;
 use App\Models\Room;
+use App\Repositories\RoomRepository;
 use App\Services\BaseService;
 
 class RoomService extends BaseService
 {
-    use RoomTrait;
 
     private const FIELDS_UPDATE = [
         'number',
@@ -22,6 +22,14 @@ class RoomService extends BaseService
         'cost8',
         'cost9',
     ];
+
+    /** @var RoomRepository */
+    private $roomRepository;
+
+    public function __construct(RoomRepository $roomRepository)
+    {
+        $this->roomRepository = $roomRepository;
+    }
 
     /**
      * @param DataCreateRoomInterface $dataCreateRoom
