@@ -10,11 +10,6 @@ class Room extends BaseModel
     protected $fillable = [
         'number',
         'description',
-        'cost5',
-        'cost6',
-        'cost7',
-        'cost8',
-        'cost9',
     ];
 
     public function reservations()

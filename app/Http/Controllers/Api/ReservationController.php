@@ -6,6 +6,7 @@ use App\Http\Requests\Reservation\ReservationCreateRequest;
 use App\Http\Requests\Reservation\ReservationUpdateRequest;
 use App\Models\Reservation;
 use App\Models\Exceptions\BaseException;
+use App\Repositories\ReservationRepository;
 use Illuminate\Http\JsonResponse;
 use App\Services\Reservation\ReservationService;
 use Exception;
@@ -15,10 +16,14 @@ class ReservationController extends ApiController
     /** @var ReservationService  */
     private $reservationService;
 
+    /** @var ReservationRepository */
+    private $reservationRepository;
 
-    public function __construct(ReservationService $reservationService)
+
+    public function __construct(ReservationService $reservationService, ReservationRepository $reservationRepository)
     {
         $this->reservationService = $reservationService;
+        $this->reservationRepository = $reservationRepository;
     }
 
     /**
@@ -53,7 +58,7 @@ class ReservationController extends ApiController
     public function getRoom(int $reservationId): JsonResponse
     {
         try {
-            $room = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId)->room;
+            $room = $this->reservationService->getModalById($this->reservationRepository, $reservationId)->room;
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -68,7 +73,7 @@ class ReservationController extends ApiController
     public function view(int $reservationId): JsonResponse
     {
         try {
-            $reservation = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId);
+            $reservation = $this->reservationService->getModalById($this->reservationRepository, $reservationId);
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -100,7 +105,7 @@ class ReservationController extends ApiController
     public function destroy(int $reservationId): JsonResponse
     {
         try {
-            $reservation = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId)->delete();
+            $reservation = $this->reservationService->getModalById($this->reservationRepository, $reservationId)->delete();
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), 404);
         }

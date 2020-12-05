@@ -6,6 +6,7 @@ use App\Http\Requests\Room\RoomCreateRequest;
 use App\Http\Requests\Room\RoomUpdateRequest;
 use App\Models\Exceptions\BaseException;
 use App\Models\Room;
+use App\Repositories\RoomRepository;
 use Illuminate\Http\JsonResponse;
 use App\Services\Room\RoomService;
 use Exception;
@@ -15,10 +16,14 @@ class RoomController extends ApiController
     /** @var RoomService  */
     private $roomService;
 
+    /** @var RoomRepository */
+    private $roomRepository;
 
-    public function __construct(RoomService $roomService)
+
+    public function __construct(RoomService $roomService, RoomRepository $roomRepository)
     {
         $this->roomService = $roomService;
+        $this->roomRepository = $roomRepository;
     }
 
     /**
@@ -37,7 +42,7 @@ class RoomController extends ApiController
     public function getRevelation(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomService->getRoomRepository(), $roomId);
+            $room = $this->roomService->getModalById($this->roomRepository , $roomId);
             $reservations = $room->reservations;
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
@@ -68,7 +73,7 @@ class RoomController extends ApiController
     public function view(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomService->getRoomRepository(), $roomId);
+            $room = $this->roomService->getModalById($this->roomRepository, $roomId);
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -100,7 +105,7 @@ class RoomController extends ApiController
     public function destroy(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomService->getRoomRepository(), $roomId)->delete();
+            $room = $this->roomService->getModalById($this->roomRepository, $roomId)->delete();
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), 404);
         }

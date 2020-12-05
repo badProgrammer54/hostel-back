@@ -7,6 +7,7 @@ use App\Interfaces\Reservation\DataCreateReservationInterface;
 use App\Interfaces\Reservation\DataUpdateReservationInterface;
 use App\Models\Exceptions\ServiceException;
 use App\Models\Reservation;
+use App\Repositories\ReservationRepository;
 use App\Services\BaseService;
 use Illuminate\Support\Facades\Date;
 
@@ -24,6 +25,15 @@ class ReservationService extends BaseService
         'message',
         'status',
     ];
+
+    /** @var ReservationRepository */
+    private $reservationRepository;
+
+
+    public function __construct(ReservationRepository $reservationRepository)
+    {
+        $this->reservationRepository = $reservationRepository;
+    }
 
     /**
      * @param DataCreateReservationInterface $dataCreateReservation

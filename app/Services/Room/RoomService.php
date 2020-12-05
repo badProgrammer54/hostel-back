@@ -16,11 +16,6 @@ class RoomService extends BaseService
     private const FIELDS_UPDATE = [
         'number',
         'description',
-        'cost5',
-        'cost6',
-        'cost7',
-        'cost8',
-        'cost9',
     ];
 
     /** @var RoomRepository */
