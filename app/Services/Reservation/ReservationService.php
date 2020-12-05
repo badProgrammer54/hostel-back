@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Date;
 
 class ReservationService extends BaseService
 {
-    use ReservationTrait;
 
     private const FIELDS_UPDATE = [
         'date_arrival',
