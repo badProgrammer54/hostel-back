@@ -39,16 +39,32 @@ class RoomController extends ApiController
      * @param int $roomId
      * @return JsonResponse
      */
-    public function getRevelation(int $roomId): JsonResponse
+    public function getRevelations(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomRepository , $roomId);
+            $room = $this->roomRepository->getById($roomId);
             $reservations = $room->reservations;
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
 
         return $this->sendResponse(['reservations' => $reservations]);
+    }
+
+    /**
+     * @param int $roomId
+     * @return JsonResponse
+     */
+    public function getCosts(int $roomId): JsonResponse
+    {
+        try {
+            $room = $this->roomRepository->getById($roomId);
+            $costs = $room->costs;
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
+
+        return $this->sendResponse(['costs' => $costs]);
     }
 
     /**
@@ -73,7 +89,7 @@ class RoomController extends ApiController
     public function view(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomRepository, $roomId);
+            $room = $this->roomRepository->getById($roomId);
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -89,7 +105,7 @@ class RoomController extends ApiController
     public function update(RoomUpdateRequest $request, int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->updateRoom($request, $roomId);
+            $room = $this->roomRepository->getById($roomId);
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -105,7 +121,7 @@ class RoomController extends ApiController
     public function destroy(int $roomId): JsonResponse
     {
         try {
-            $room = $this->roomService->getModalById($this->roomRepository, $roomId)->delete();
+            $room = $this->roomRepository->getById($roomId)->delete();
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), 404);
         }
