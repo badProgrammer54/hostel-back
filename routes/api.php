@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\CostController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\MonthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -51,6 +52,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('cost/{costId}', [CostController::class, 'destroy'])->where('costId', '[0-9]+');
     Route::patch('cost/{costId}', [CostController::class, 'update'])->where('costId', '[0-9]+');
     Route::post('rooms/{roomId}/cost', [CostController::class, 'create'])->where('roomId', '[0-9]+');
+
+    Route::get('month', [MonthController::class, 'index']);
 
 
     Route::get('user', function (Request $request) {

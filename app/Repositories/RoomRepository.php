@@ -14,4 +14,5 @@ class RoomRepository extends BaseRepository
     {
         return Room::class;
     }
+
 }
