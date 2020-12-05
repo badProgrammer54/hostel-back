@@ -58,7 +58,7 @@ class ReservationController extends ApiController
     public function getRoom(int $reservationId): JsonResponse
     {
         try {
-            $room = $this->reservationService->getModalById($this->reservationRepository, $reservationId)->room;
+            $room = $this->reservationRepository->getById($reservationId)->room;
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -73,7 +73,7 @@ class ReservationController extends ApiController
     public function view(int $reservationId): JsonResponse
     {
         try {
-            $reservation = $this->reservationService->getModalById($this->reservationRepository, $reservationId);
+            $reservation = $this->reservationRepository->getById($reservationId);
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), $e->getCode());
         }
@@ -105,7 +105,7 @@ class ReservationController extends ApiController
     public function destroy(int $reservationId): JsonResponse
     {
         try {
-            $reservation = $this->reservationService->getModalById($this->reservationRepository, $reservationId)->delete();
+            $reservation = $this->reservationRepository->getById($reservationId)->delete();
         } catch (BaseException $e) {
             return $this->sendError(1, $e->getMessage(), 404);
         }
