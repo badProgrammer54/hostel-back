@@ -16,4 +16,9 @@ class Room extends BaseModel
     {
         return $this->hasMany(Reservation::class);
     }
+
+    public function costs()
+    {
+        return $this->hasMany(Cost::class);
+    }
 }
