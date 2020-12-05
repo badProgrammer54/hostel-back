@@ -50,6 +50,21 @@ class ReservationController extends ApiController
      * @param int $reservationId
      * @return JsonResponse
      */
+    public function getRoom(int $reservationId): JsonResponse
+    {
+        try {
+            $room = $this->reservationService->getModalById($this->reservationService->getReservationRepository(), $reservationId)->room;
+        } catch (BaseException $e) {
+            return $this->sendError(1, $e->getMessage(), $e->getCode());
+        }
+
+        return $this->sendResponse(['room' => $room]);
+    }
+
+    /**
+     * @param int $reservationId
+     * @return JsonResponse
+     */
     public function view(int $reservationId): JsonResponse
     {
         try {

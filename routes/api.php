@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\RoomController;
 use App\Http\Controllers\Api\ReservationController;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,6 +40,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::get('reservation', [ReservationController::class, 'index']);
     Route::get('reservation/{reservationId}', [ReservationController::class, 'view'])->where('reservationId', '[0-9]+');
+    Route::get('reservation/{reservationId}/room', [ReservationController::class, 'getRoom'])->where('reservationId', '[0-9]+');
     Route::delete('reservation/{reservationId}', [ReservationController::class, 'destroy'])->where('reservationId', '[0-9]+');
     Route::patch('reservation/{reservationId}', [ReservationController::class, 'update'])->where('reservationId', '[0-9]+');
     Route::post('rooms/{roomId}/reservation', [ReservationController::class, 'create'])->where('roomId', '[0-9]+');
