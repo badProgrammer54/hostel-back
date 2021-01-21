@@ -4,14 +4,13 @@
 namespace App\Repositories;
 
 
-use App\Models\NewsPost;
+use App\Models\Cost;
 
-
-class NewsPostRepository extends BaseRepository
+class CostRepository extends BaseRepository
 {
     /** @return string */
     public function getModelClass(): string
     {
-        return NewsPost::class;
+        return Cost::class;
     }
 }

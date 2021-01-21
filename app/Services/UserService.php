@@ -40,12 +40,11 @@ class UserService extends BaseService
             throw new ServiceException('Unauthenticated', 401);
         }
 
-        return $this->refreshBearerToken($user);
+        return $user->createToken('authToken')->plainTextToken;
     }
 
     private function refreshBearerToken(User $user): string
     {
         $user->tokens()->where('name', 'authToken')->delete();
-        return $user->createToken('authToken')->plainTextToken;
     }
 }
